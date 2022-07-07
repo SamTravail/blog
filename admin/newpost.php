@@ -47,7 +47,7 @@ debug($errors);
 
 include('../inc/header.php'); ?>
     <h1>Ajouter un nouveau post</h1>
-    <form action="" method="post" novalidate>
+    <form action="" method="post" novalidate class="wrap2">
         <label for="title">Titre</label>
         <input type="text" name="title" id="title" value="<?php if(!empty($_POST['title'])) { echo $_POST['title']; } ?>">
         <span class="error"><?php if(!empty($errors['title'])) { echo $errors['title']; } ?></span>
@@ -59,10 +59,31 @@ include('../inc/header.php'); ?>
         <label for="auteur">Auteur</label>
         <input type="text" name="auteur" id="auteur" value="<?php if(!empty($_POST['auteur'])) { echo $_POST['auteur']; } ?>">
         <span class="error"><?php if(!empty($errors['auteur'])) { echo $errors['auteur']; } ?></span>
+        
+        <?php
 
-        <label for="status">Status</label>
-        <input type="text" name="status" id="status" value="<?php if(!empty($_POST['status'])) { echo $_POST['status']; } ?>">
+        // tableau du status avec key et valeur !
+        $status = array(
+            'draft' => 'Brouillon',
+            'publish' => 'Publié'
+        );
+
+        ?>
+        <select name="status">
+            <option value="">----------------------</option>
+            <?php foreach($status as $key => $value) {
+                $selected= '';
+                if(!empty($_POST['status'])) {
+                    if($_POST['status'] == $key) {
+                        $selected = ' selected="selected"';
+                    }
+                }
+                ?>
+                <option value="<?php echo $key; ?>"<?php echo $selected; ?>><?php echo $value; ?></option>
+            <?php } ?>
+        </select>
         <span class="error"><?php if(!empty($errors['status'])) { echo $errors['status']; } ?></span>
+
 
         <input type="submit" name="submitted" value="Ajouter un New Post !">
     </form>
