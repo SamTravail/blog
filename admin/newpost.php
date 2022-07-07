@@ -1,5 +1,5 @@
-
-<p><a href="admin/index.php">Index Admin</a></p>
+<?php include('inc/header-back.php');
+?>
 <H1>New Post</H1>
 
 <?php
@@ -16,33 +16,34 @@ if(!empty($_POST['submitted'])) {
     // Faille XSS
 
     $title = cleanXss('title');
-    $content = trim(strip_tags($_POST['content']));
-    $auteur = trim(strip_tags($_POST['auteur']));
-    $status = trim(strip_tags($_POST['status']));
+    // $content = trim(strip_tags($_POST['content']));
+    // $auteur = trim(strip_tags($_POST['auteur']));
+    // $status = trim(strip_tags($_POST['status']));
     // Validation
     $errors = validText($errors,$title,'title',3,100);
-    $errors = validText($errors,$content,'content',10,1000);
-    $errors = validText($errors, $auteur, 'auteur');
-    $errors = validText($errors, $status, 'status');
+    // $errors = validText($errors,$content,'content',10,1000);
+    // $errors = validText($errors, $auteur, 'auteur');
+    // $errors = validText($errors, $status, 'status');
     
 
     if(count($errors) === 0) {
         // insertion en BDD si aucune error
-        $sql = "INSERT INTO article (title,content,auteur,status,created_at) VALUES (:title,:content,:auteur,:status,NOW())";
+        $sql = "INSERT INTO article (title,created_at) VALUES (:title,NOW())";
+        // $sql = "INSERT INTO article (title,content,auteur,status,created_at) VALUES (:title,:content,:auteur,:status,NOW())";
         $query = $pdo->prepare($sql);
         // ATTENTION INJECTION SQL
         $query->bindValue(':title',$title, PDO::PARAM_STR);
-        $query->bindValue(':content',$content, PDO::PARAM_STR);
-        $query->bindValue(':auteur',$auteur, PDO::PARAM_STR);
-        $query->bindValue(':status',$status, PDO::PARAM_STR);
-        $query->execute();
-        $last_id = $pdo->lastInsertId();
-        header('Location: detail-beer.php?id=' . $last_id);
+        // $query->bindValue(':content',$content, PDO::PARAM_STR);
+        // $query->bindValue(':auteur',$auteur, PDO::PARAM_STR);
+        // $query->bindValue(':status',$status, PDO::PARAM_STR);
+        // $query->execute();
+        // $last_id = $pdo->lastInsertId();
+        // header('Location: detail-beer.php?id=' . $last_id);
 //        $success = true;
     }
 }
-//debug($_POST);
-//debug($errors);
+debug($_POST);
+debug($errors);
 
 include('inc/header.php'); ?>
     <h1>Ajouter un nouveau post</h1>
