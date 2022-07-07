@@ -1,7 +1,3 @@
-<?php include('inc/header-back.php');
-?>
-<H1>New Post</H1>
-
 <?php
 
 require('../inc/pdo.php');
@@ -11,26 +7,33 @@ require('../inc/fonction.php');
 
 // Formulaire est soumis ???
 $success = false;
-$errors = array();
-if(!empty($_POST['submitted'])) {
-    // Faille XSS
 
-    $title = cleanXss('title');
+// creation du tableau des erreurs
+$errors = array();
+
+//si il n'y a pas eu de submit,
+if(!empty($_POST['submitted'])) {
+    
+    // retrait des espaces,  Faille XSS
+    $title = trim(strip_tags($_POST['title']));
     $content = trim(strip_tags($_POST['content']));
     $auteur = trim(strip_tags($_POST['auteur']));
     $status = trim(strip_tags($_POST['status']));
-    // Validation
+
+    // vérification des champs pour Validation
     $errors = validText($errors,$title,'title',3,100);
     $errors = validText($errors,$content,'content',10,1000);
     $errors = validText($errors, $auteur, 'auteur',2,50);
     $errors = validText($errors, $status, 'status',5,20);
     
-
+    // si pas d'erreurs, alors :
     if(count($errors) === 0) {
-        // insertion en BDD si aucune error
-        // $sql = "INSERT INTO article (title,created_at) VALUES (:title,NOW())";
+
+        // insertion dans la BDD
         $sql = "INSERT INTO article (title,content,auteur,status,created_at) VALUES (:title,:content,:auteur,:status,NOW())";
+
         $query = $pdo->prepare($sql);
+
         // ATTENTION INJECTION SQL
         $query->bindValue(':title',$title, PDO::PARAM_STR);
         $query->bindValue(':content',$content, PDO::PARAM_STR);
@@ -38,15 +41,20 @@ if(!empty($_POST['submitted'])) {
         $query->bindValue(':status',$status, PDO::PARAM_STR);
         $query->execute();
         $last_id = $pdo->lastInsertId();
+
+        // retour apres injection
         header('Location: index.php?id=' . $last_id);
+
+        // Formulaire soumis !
        $success = true;
     }
 }
-debug($_POST);
-debug($errors);
+// debug($_POST);
+// debug($errors);
 
-include('../inc/header.php'); ?>
-    <h1>Ajouter un nouveau post</h1>
+include('inc/header-back.php'); ?>
+
+    <h1>Ajouter un Arrrticlee</h1>
     <form action="" method="post" novalidate class="wrap2">
         <label for="title">Titre</label>
         <input type="text" name="title" id="title" value="<?php if(!empty($_POST['title'])) { echo $_POST['title']; } ?>">
@@ -65,12 +73,13 @@ include('../inc/header.php'); ?>
         // tableau du status avec key et valeur !
         $status = array(
             'draft' => 'Brouillon',
-            'publish' => 'Publié'
+            'publish' => 'Publié',
+            'testKey3' => 'Value3'
         );
 
         ?>
         <select name="status">
-            <option value="">----------------------</option>
+            <option value="">----  /!\  ---- Veuillez choisir le status de l'article ----------</option>
             <?php foreach($status as $key => $value) {
                 $selected= '';
                 if(!empty($_POST['status'])) {
