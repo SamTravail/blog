@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: #7fa982;
+}
+
+
+header, footer {
+    background-color: #cac3c3;
+}
