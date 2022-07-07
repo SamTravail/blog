@@ -4,8 +4,8 @@
 
 <?php
 
-require('inc/pdo.php');
-require('inc/function.php');
+require('../inc/pdo.php');
+require('../inc/fonction.php');
 
 // Traitement PHP
 
@@ -16,36 +16,36 @@ if(!empty($_POST['submitted'])) {
     // Faille XSS
 
     $title = cleanXss('title');
-    // $content = trim(strip_tags($_POST['content']));
-    // $auteur = trim(strip_tags($_POST['auteur']));
-    // $status = trim(strip_tags($_POST['status']));
+    $content = trim(strip_tags($_POST['content']));
+    $auteur = trim(strip_tags($_POST['auteur']));
+    $status = trim(strip_tags($_POST['status']));
     // Validation
     $errors = validText($errors,$title,'title',3,100);
-    // $errors = validText($errors,$content,'content',10,1000);
-    // $errors = validText($errors, $auteur, 'auteur');
-    // $errors = validText($errors, $status, 'status');
+    $errors = validText($errors,$content,'content',10,1000);
+    $errors = validText($errors, $auteur, 'auteur',2,50);
+    $errors = validText($errors, $status, 'status',5,20);
     
 
     if(count($errors) === 0) {
         // insertion en BDD si aucune error
-        $sql = "INSERT INTO article (title,created_at) VALUES (:title,NOW())";
-        // $sql = "INSERT INTO article (title,content,auteur,status,created_at) VALUES (:title,:content,:auteur,:status,NOW())";
+        // $sql = "INSERT INTO article (title,created_at) VALUES (:title,NOW())";
+        $sql = "INSERT INTO article (title,content,auteur,status,created_at) VALUES (:title,:content,:auteur,:status,NOW())";
         $query = $pdo->prepare($sql);
         // ATTENTION INJECTION SQL
         $query->bindValue(':title',$title, PDO::PARAM_STR);
-        // $query->bindValue(':content',$content, PDO::PARAM_STR);
-        // $query->bindValue(':auteur',$auteur, PDO::PARAM_STR);
-        // $query->bindValue(':status',$status, PDO::PARAM_STR);
-        // $query->execute();
-        // $last_id = $pdo->lastInsertId();
-        // header('Location: detail-beer.php?id=' . $last_id);
-//        $success = true;
+        $query->bindValue(':content',$content, PDO::PARAM_STR);
+        $query->bindValue(':auteur',$auteur, PDO::PARAM_STR);
+        $query->bindValue(':status',$status, PDO::PARAM_STR);
+        $query->execute();
+        $last_id = $pdo->lastInsertId();
+        header('Location: index.php?id=' . $last_id);
+       $success = true;
     }
 }
 debug($_POST);
 debug($errors);
 
-include('inc/header.php'); ?>
+include('../inc/header.php'); ?>
     <h1>Ajouter un nouveau post</h1>
     <form action="" method="post" novalidate>
         <label for="title">Titre</label>
@@ -66,4 +66,4 @@ include('inc/header.php'); ?>
 
         <input type="submit" name="submitted" value="Ajouter un New Post !">
     </form>
-<?php include('inc/footer.php');
+<?php include('../inc/footer.php');
