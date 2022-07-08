@@ -30,7 +30,7 @@ if(!empty($_POST['submitted'])) {
     if(count($errors) === 0) {
 
         // insertion dans la BDD
-        $sql = "INSERT INTO article (title,content,auteur,status,created_at) VALUES (:title,:content,:auteur,:status,NOW())";
+        $sql = "INSERT INTO articles (title,content,auteur,status,created_at) VALUES (:title,:content,:auteur,:status,NOW())";
 
         $query = $pdo->prepare($sql);
 
@@ -43,7 +43,7 @@ if(!empty($_POST['submitted'])) {
         $last_id = $pdo->lastInsertId();
 
         // retour apres injection
-        header('Location: index.php?id=' . $last_id);
+        // header('Location: index.php?id=' . $last_id);
 
         // Formulaire soumis !
        $success = true;
