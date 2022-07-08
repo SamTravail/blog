@@ -216,3 +216,8 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudiocode,jetbrains
 
 asset/img/err.jpg
+.idea/vcs.xml
+.idea/php.xml
+.idea/modules.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/blog.iml
