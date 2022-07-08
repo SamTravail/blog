@@ -30,7 +30,7 @@ if(!empty($_POST['submitted'])) {
     if(count($errors) === 0) {
     // die('ok');
         // Update dans la BDD
-        $sql = "UPDATE articles (title,content,auteur,status,created_at, modified_at) VALUES (:title,:content,:auteur,:status,NOW(),NOW())";
+        $sql = "UPDATE articles SET title= :title, content= :content, auteur = :auteur, status= :status,  WHERE id= :id";
 
         $query = $pdo->prepare($sql);
 
@@ -39,6 +39,7 @@ if(!empty($_POST['submitted'])) {
         $query->bindValue(':content',$content, PDO::PARAM_STR);
         $query->bindValue(':auteur',$auteur, PDO::PARAM_STR);
         $query->bindValue(':status',$status, PDO::PARAM_STR);
+        $query->bindValue(':id',$id, PDO::PARAM_INT);
         $query->execute();
         $last_id = $pdo->lastInsertId();
 
