@@ -34,7 +34,7 @@ if(!empty($_POST['submitted'])) {
 
         $query = $pdo->prepare($sql);
 
-        // ATTENTION INJECTION SQL
+        // INJECTION SQL
         $query->bindValue(':title',$title, PDO::PARAM_STR);
         $query->bindValue(':content',$content, PDO::PARAM_STR);
         $query->bindValue(':auteur',$auteur, PDO::PARAM_STR);
@@ -96,4 +96,4 @@ include('inc/header-back.php'); ?>
 
         <input type="submit" name="submitted" value="Ajouter un New Post !">
     </form>
-<?php include('inc/footer-back.php');
+<?php include('inc/footer-back.php');?>
