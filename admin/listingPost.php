@@ -45,7 +45,7 @@ include('inc/header-back.php'); ?>
             <td><?=$article['content']?></td>
             <td><?=$article['auteur']?></td>
             <td><?=$article['status']?></td>
-            <td><a href="editPost.php">Editer</a></td>
+            <td><a href="editPost.php?id=<?=$article['id']?>">Editer</a></td>
         </tr>
         <?php } ?>
    </tbody>

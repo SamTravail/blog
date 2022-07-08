@@ -32,6 +32,17 @@ function dateSite($data,$format = 'd/m/Y à H:i')
 }
 
 
+function getValue($key,$data = null) {
+    if(!empty($_POST[$key])) {
+        return $_POST[$key];
+    } else {
+        if(!empty($data)) {
+            return $data;
+        }
+    }
+    return '';
+}
+
 
 // ------------- fonction validate mail non utilisée pour le mooment ------------
 
