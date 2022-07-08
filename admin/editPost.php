@@ -8,8 +8,8 @@ require('../inc/fonction.php');
     $id = $_GET['id'];
 // function getId($id) {
 //     global $pdo;
-    $sql = "SELECT * FROM blog WHERE id = $id";
-    $query = $pdo->prepare($sql);
+    $articles = "SELECT * FROM blog WHERE id = $id";
+    $query = $pdo->prepare($articles);
     $query->bindValue(':id', $id, PDO::PARAM_INT);
     $query->execute();
     $article = $query->fetch();
@@ -38,9 +38,9 @@ if(!empty($_POST['submitted'])) {
     if(count($errors) === 0) {
     // die('ok');
         // Update dans la BDD
-        $sql2 = "UPDATE articles SET title= :title, content= :content, auteur = :auteur, modified_at = NOW(), status= :status WHERE id= :id";
+        $requete_update = "UPDATE articles SET title= :title, content= :content, auteur = :auteur, modified_at = NOW(), status= :status WHERE id= :id";
 
-        $query = $pdo->prepare($sql2);
+        $query = $pdo->prepare($requete_update);
 
         // INJECTION SQL
         $query->bindValue(':title',$title, PDO::PARAM_STR);
