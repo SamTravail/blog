@@ -32,6 +32,11 @@ function dateSite($data,$format = 'd/m/Y à H:i')
 }
 
 
+function abort404(){
+    header('HTTP/1.0 404 Not Found');
+    header('Location: 404.php');
+}
+
 function getValue($key,$data = null) {
     if(!empty($_POST[$key])) {
         return $_POST[$key];
