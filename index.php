@@ -10,5 +10,12 @@ include('inc/header.php'); ?>
 
 <h1>Home page FRONT</h1>
 
+<div>
+
+<?php include('publishPost.php') ?>
+
+</div>
+
+
 
 <?php include('inc/footer.php');

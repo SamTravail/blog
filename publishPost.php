@@ -1,10 +1,5 @@
-<?php
-
-// ajout du header-back pour retour index-back !
-include('inc/header-back.php'); ?>
-
-<!-- création tu tableau pour affichage des résultats -->
-<h1>Liste des articles</h1>
+ <!-- création tu tableau pour affichage des articles publiés -->
+<h1>Articles publiés</h1>
 <table>
    <thead>
     <tr>
@@ -26,4 +21,3 @@ include('inc/header-back.php'); ?>
         <?php } ?>
    </tbody>
 </table>
-<?php include('inc/footer-back.php'); ?>
