@@ -5,7 +5,7 @@ require('../inc/fonction.php');
 
 // Traitement PHP
 
-// Formulaire est soumis ???
+// init de la soumission a false
 $success = false;
 
 // creation du tableau des erreurs
@@ -28,9 +28,9 @@ if(!empty($_POST['submitted'])) {
     
     // si pas d'erreurs, alors :
     if(count($errors) === 0) {
-
+    // die('ok');
         // insertion dans la BDD
-        $sql = "INSERT INTO articles (title,content,auteur,status,created_at) VALUES (:title,:content,:auteur,:status,NOW())";
+        $sql = "INSERT INTO articles (title,content,auteur,status,created_at, modified_at) VALUES (:title,:content,:auteur,:status,NOW(),NOW())";
 
         $query = $pdo->prepare($sql);
 
@@ -96,4 +96,4 @@ include('inc/header-back.php'); ?>
 
         <input type="submit" name="submitted" value="Ajouter un New Post !">
     </form>
-<?php include('../inc/footer.php');
+<?php include('inc/footer-back.php');
