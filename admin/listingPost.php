@@ -1,14 +1,11 @@
 <?php 
 
-// ajout du header-back pour retour index-back !
-include('inc/header-back.php');
-
 // Importation des fonctions
 require('../inc/pdo.php');
 require('../inc/fonction.php');
 
 // Selection dans la BDD articles, et affichage par date décroissante
-$select_articles = "SELECT * FROM articles ORDER BY title DESC";
+$select_articles = "SELECT * FROM articles ORDER BY created_at DESC";
 
 // préparation pour l'injection SQL
 $query = $pdo->prepare($select_articles);
@@ -19,6 +16,11 @@ $query->execute();
 // Affiche le résultat
 $articles = $query->fetchAll();
 ?>
+
+<?php
+
+// ajout du header-back pour retour index-back !
+include('inc/header-back.php'); ?>
 
 <!-- création tu tableau pour affichage des résultats -->
 <h1>Liste des articles</h1>
@@ -48,4 +50,4 @@ $articles = $query->fetchAll();
         <?php } ?>
    </tbody>
 </table>
-<?php include('inc/footer-back.php');?>
+<?php include('inc/footer-back.php'); ?>
