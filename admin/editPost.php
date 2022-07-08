@@ -38,9 +38,9 @@ if(!empty($_POST['submitted'])) {
     if(count($errors) === 0) {
     // die('ok');
         // Update dans la BDD
-        $sql = "UPDATE articles SET title= :title, content= :content, auteur = :auteur, status= :status WHERE id= :id";
+        $sql2 = "UPDATE articles SET title= :title, content= :content, auteur = :auteur, modified_at = NOW(), status= :status WHERE id= :id";
 
-        $query = $pdo->prepare($sql);
+        $query = $pdo->prepare($sql2);
 
         // INJECTION SQL
         $query->bindValue(':title',$title, PDO::PARAM_STR);
@@ -51,7 +51,7 @@ if(!empty($_POST['submitted'])) {
         $query->execute();
 
         // retour apres injection
-        header('Location: index.php');
+        // header('Location: index.php');
 
         // Formulaire soumis !
        $success = true;
@@ -65,15 +65,15 @@ include('inc/header-back.php'); ?>
     <h1>Edition d'un Article</h1>
     <form action="" method="post" novalidate class="wrap2">
         <label for="title">Titre</label>
-        <input type="text" name="title" id="title" value="<?= getValue('title',$article['title']); ?>">
+        <input type="text" name="title" id="title" value="<?=$article['title']; ?>">
         <span class="error"><?php if(!empty($errors['title'])) { echo $errors['title']; } ?></span>
 
         <label for="content">Contenu</label>
-        <textarea name="content" id="content" cols="30" rows="10"><?php if(!empty($_POST['content'])) { echo $_POST['content']; } ?></textarea>
+        <textarea name="content" id="content" cols="30" rows="10"><?=$article['content']; ?></textarea>
         <span class="error"><?php if(!empty($errors['content'])) { echo $errors['content']; } ?></span>
 
         <label for="auteur">Auteur</label>
-        <input type="text" name="auteur" id="auteur" value="<?php if(!empty($_POST['auteur'])) { echo $_POST['auteur']; } ?>">
+        <input type="text" name="auteur" id="auteur" value="<?=$article['auteur']; ?>">
         <span class="error"><?php if(!empty($errors['auteur'])) { echo $errors['auteur']; } ?></span>
         
         <?php
