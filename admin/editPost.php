@@ -8,12 +8,18 @@ require('../inc/fonction.php');
     $id = $_GET['id'];
 // function getId($id) {
 //     global $pdo;
-    $articles = "SELECT * FROM blog WHERE id = $id";
-    $query = $pdo->prepare($articles);
+    $sql = "SELECT * FROM articles WHERE id = $id";
+    $query = $pdo->prepare($sql);
     $query->bindValue(':id', $id, PDO::PARAM_INT);
     $query->execute();
     $article = $query->fetch();
-} 
+    
+    if(empty($article)) {
+        die('404');
+     }
+} else {
+ die('404');
+}
 
 // Traitement PHP
 // Création du tableau des erreurs
@@ -38,9 +44,9 @@ if(!empty($_POST['submitted'])) {
     if(count($errors) === 0) {
     // die('ok');
         // Update dans la BDD
-        $requete_update = "UPDATE articles SET title= :title, content= :content, auteur = :auteur, modified_at = NOW(), status= :status WHERE id= :id";
+        $sql2 = "UPDATE articles SET title= :title, content= :content, auteur = :auteur, modified_at = NOW(), status= :status WHERE id= :id";
 
-        $query = $pdo->prepare($requete_update);
+        $query = $pdo->prepare($sql2);
 
         // INJECTION SQL
         $query->bindValue(':title',$title, PDO::PARAM_STR);
@@ -65,15 +71,15 @@ include('inc/header-back.php'); ?>
     <h1>Edition d'un Article</h1>
     <form action="" method="post" novalidate class="wrap2">
         <label for="title">Titre</label>
-        <input type="text" name="title" id="title" value="<?=$article['title']; ?>">
+        <input type="text" name="title" id="title" value="<?= $article['title']; ?>">
         <span class="error"><?php if(!empty($errors['title'])) { echo $errors['title']; } ?></span>
 
         <label for="content">Contenu</label>
-        <textarea name="content" id="content" cols="30" rows="10"><?=$article['content']; ?></textarea>
+        <textarea name="content" id="content" cols="30" rows="10"><?= $article['content']; ?></textarea>
         <span class="error"><?php if(!empty($errors['content'])) { echo $errors['content']; } ?></span>
 
         <label for="auteur">Auteur</label>
-        <input type="text" name="auteur" id="auteur" value="<?=$article['auteur']; ?>">
+        <input type="text" name="auteur" id="auteur" value="<?= $article['auteur']; ?>">
         <span class="error"><?php if(!empty($errors['auteur'])) { echo $errors['auteur']; } ?></span>
         
         <?php
