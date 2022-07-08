@@ -8,7 +8,7 @@ require('../inc/fonction.php');
     $id = $_GET['id'];
 // function getId($id) {
 //     global $pdo;
-    $sql = "SELECT * FROM articles WHERE id = $id";
+    $sql = "SELECT * FROM articles WHERE id = :id";
     $query = $pdo->prepare($sql);
     $query->bindValue(':id', $id, PDO::PARAM_INT);
     $query->execute();
@@ -57,7 +57,7 @@ if(!empty($_POST['submitted'])) {
         $query->execute();
 
         // retour apres injection
-        // header('Location: index.php');
+        header('Location: index.php');
 
         // Formulaire soumis !
        $success = true;
