@@ -12,7 +12,7 @@
  
     <!-- affichage des éléments récuppérés dans le tableau -->
     <tbody>
-        <?php foreach ($articles as $article) { ?>
+        <?php if $status  { ?>
         <tr>
             <td><?=$article['title']?></td>
             <td><?=$article['auteur']?></td>
