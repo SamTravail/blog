@@ -12,12 +12,13 @@
  
     <!-- affichage des éléments récuppérés dans le tableau -->
     <tbody>
-        <?php if $status  { ?>
+        <?php if $status { ?>
         <tr>
             <td><?=$article['title']?></td>
             <td><?=$article['auteur']?></td>
             <td><?=$article['modified_at']?></td>
         </tr>
         <?php } ?>
+
    </tbody>
 </table>
